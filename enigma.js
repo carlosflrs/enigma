@@ -29,7 +29,38 @@ function main() {
     globalRotors[rotors[2]].position = "X";
     globalRotors[rotors[3]].position = "L";
     globalRotors[rotors[4]].position = "E";
-    encryptMessage("Hello my name is carlos", rotors);
+    encryptMessage("GGPJV SKDTJ WXGMQ XLAXK NPJMK WQRJZ JGJJA TCTKT AQLUB WCWRC DRSQJ ELJRY OGLYF EKGWQ ARAFY UVELQ FKVPT NNFCZ BZYXC MBFHV XPDNI XXJHQ KVZBL VHLXR NRFLC BMEFP HJNJN RSNFN ASRBV XHZIS RLWTY EUKUJ AQAVX JQWTF JDMJO JOUYW SRLLN ARWGE KOHLP UPTSS DRLET FAXJI UWJLX ZZRJY", rotors);
+    // var rotation0 = 0;
+    // var rotation1 = 0;
+    // var rotation2 = 0;
+    // var rotation3 = 0;
+    // var rotation4 = 0;
+    //
+    // $('#I').click(function() {
+    //     degrees0 = angle(letterInAlphabet(mod(rotation0 + 1, 26)));
+    //     rotation0 += 1;
+    //     rotate(this, degrees0);
+    // });
+    // $('#II').click(function() {
+    //     degrees1 = angle(letterInAlphabet(mod(rotation1 + 1, 26)));
+    //     rotation1 += 1;
+    //     rotate(this, degrees1);
+    // });
+    // $('#III').click(function() {
+    //     degrees2 = angle(letterInAlphabet(mod(rotation2 + 1, 26)));
+    //     rotation2 += 1;
+    //     rotate(this, degrees2);
+    // });
+    // $('#IV').click(function() {
+    //     degrees3 = angle(letterInAlphabet(mod(rotation3 + 1, 26)));
+    //     rotation3 += 1;
+    //     rotate(this, degrees3);
+    // });
+    // $('#V').click(function() {
+    //     degrees4 = angle(letterInAlphabet(mod(rotation4 + 1, 26)));
+    //     rotation4 += 1;
+    //     rotate(this, degrees4);
+    // });
 }
 
 function encryptMessage(message, rotors) {
@@ -39,7 +70,7 @@ function encryptMessage(message, rotors) {
     for (outer = 0; outer < lst.length; outer++) {
         msg = lst[outer];
         for (inner = 0; inner < msg.length; inner++) {
-            rotateLetterPositions(rotors);
+            setTimeout(rotateLetterPositions(rotors), 5000);
             encryptedString += encryptLetter(msg[inner], rotors);
         }
     }
@@ -127,6 +158,7 @@ function rotateLetterPositions(rotors) {
         globalRotors[rotors[3]].position =
             rotateLetter(globalRotors[rotors[3]].position);
     }
+    updateRotors();
 }
 
 function forwardPass(rotorName, oldLetter, letterPosition) {
@@ -172,5 +204,24 @@ function encryptLetter (letter, rotors) {
 }
 
 // page stuff
+
+function rotate(div, degrees) {
+    $(div).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+                 '-moz-transform' : 'rotate('+ degrees +'deg)',
+                 '-ms-transform' : 'rotate('+ degrees +'deg)',
+                 'transform' : 'rotate('+ degrees +'deg)'});
+}
+
+function angle(letter) {
+    return 13.9 * numInAlphabet(letter);
+}
+
+function updateRotors() {
+    rotate("#I", letterInAlphabet(angle(globalRotors["I"].position)));
+    rotate("#II", letterInAlphabet(angle(globalRotors["II"].position)));
+    rotate("#III", letterInAlphabet(angle(globalRotors["III"].position)));
+    rotate("#VI", letterInAlphabet(angle(globalRotors["VI"].position)));
+    rotate("#V", letterInAlphabet(angle(globalRotors["V"].position)));
+}
 
 window.onload = main;
