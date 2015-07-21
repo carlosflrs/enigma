@@ -22,14 +22,19 @@ var globalRotors = {
     };
 
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var userRotors = [];
 
 function main() {
-    rotors = ["B", "Beta", "III", "IV", "I"]
-    globalRotors[rotors[1]].position = "A";
-    globalRotors[rotors[2]].position = "X";
-    globalRotors[rotors[3]].position = "L";
-    globalRotors[rotors[4]].position = "E";
-    encryptMessage("GGPJV SKDTJ WXGMQ XLAXK NPJMK WQRJZ JGJJA TCTKT AQLUB WCWRC DRSQJ ELJRY OGLYF EKGWQ ARAFY UVELQ FKVPT NNFCZ BZYXC MBFHV XPDNI XXJHQ KVZBL VHLXR NRFLC BMEFP HJNJN RSNFN ASRBV XHZIS RLWTY EUKUJ AQAVX JQWTF JDMJO JOUYW SRLLN ARWGE KOHLP UPTSS DRLET FAXJI UWJLX ZZRJY", rotors);
+    userRotors.push("B");
+    userRotors.push("Beta");
+    userRotors.push("III");
+    userRotors.push("IV");
+    userRotors.push("I");
+    globalRotors[userRotors[1]].position = "A";
+    globalRotors[userRotors[2]].position = "X";
+    globalRotors[userRotors[3]].position = "L";
+    globalRotors[userRotors[4]].position = "E";
+    encryptMessage("GGPJV SKDTJ WXGMQ XLAXK NPJMK WQRJZ JGJJA TCTKT AQLUB WCWRC DRSQJ ELJRY OGLYF EKGWQ ARAFY UVELQ FKVPT NNFCZ BZYXC MBFHV XPDNI XXJHQ KVZBL VHLXR NRFLC BMEFP HJNJN RSNFN ASRBV XHZIS RLWTY EUKUJ AQAVX JQWTF JDMJO JOUYW SRLLN ARWGE KOHLP UPTSS DRLET FAXJI UWJLX ZZRJY", userRotors);
     // var rotation0 = 0;
     // var rotation1 = 0;
     // var rotation2 = 0;
@@ -70,7 +75,9 @@ function encryptMessage(message, rotors) {
     for (outer = 0; outer < lst.length; outer++) {
         msg = lst[outer];
         for (inner = 0; inner < msg.length; inner++) {
-            setTimeout(rotateLetterPositions(rotors), 5000);
+            setTimeout(function () {
+                rotateLetterPositions(rotors)
+            }, 5000);
             encryptedString += encryptLetter(msg[inner], rotors);
         }
     }
@@ -217,11 +224,16 @@ function angle(letter) {
 }
 
 function updateRotors() {
-    rotate("#I", letterInAlphabet(angle(globalRotors["I"].position)));
-    rotate("#II", letterInAlphabet(angle(globalRotors["II"].position)));
-    rotate("#III", letterInAlphabet(angle(globalRotors["III"].position)));
-    rotate("#VI", letterInAlphabet(angle(globalRotors["VI"].position)));
-    rotate("#V", letterInAlphabet(angle(globalRotors["V"].position)));
+    rotate("#I",
+        letterInAlphabet(angle(globalRotors[userRotors[0]].position)));
+    rotate("#II",
+        letterInAlphabet(angle(globalRotors[userRotors[1]].position)));
+    rotate("#III",
+        letterInAlphabet(angle(globalRotors[userRotors[2]].position)));
+    rotate("#VI",
+        letterInAlphabet(angle(globalRotors[userRotors[3]].position)));
+    rotate("#V",
+        letterInAlphabet(angle(globalRotors[userRotors[4]].position)));
 }
 
 window.onload = main;
