@@ -34,7 +34,8 @@ function main() {
     globalRotors[userRotors[2]].position = "X";
     globalRotors[userRotors[3]].position = "L";
     globalRotors[userRotors[4]].position = "E";
-    encryptMessage("GGPJV SKDTJ WXGMQ XLAXK NPJMK WQRJZ JGJJA TCTKT AQLUB WCWRC DRSQJ ELJRY OGLYF EKGWQ ARAFY UVELQ FKVPT NNFCZ BZYXC MBFHV XPDNI XXJHQ KVZBL VHLXR NRFLC BMEFP HJNJN RSNFN ASRBV XHZIS RLWTY EUKUJ AQAVX JQWTF JDMJO JOUYW SRLLN ARWGE KOHLP UPTSS DRLET FAXJI UWJLX ZZRJY", userRotors);
+    resetRotors();
+    encryptMessage("Hello this should be encrypted", userRotors);
     // var rotation0 = 0;
     // var rotation1 = 0;
     // var rotation2 = 0;
@@ -75,20 +76,21 @@ function encryptMessage(message, rotors) {
     for (outer = 0; outer < lst.length; outer++) {
         msg = lst[outer];
         for (inner = 0; inner < msg.length; inner++) {
-            setTimeout(function () {
-                rotateLetterPositions(rotors)
-            }, 5000);
+            rotateLetterPositions(rotors);
+            sleep(1000);
+            updateRotors();
+            console.log(globalRotors[userRotors[4]].position);
             encryptedString += encryptLetter(msg[inner], rotors);
         }
     }
     lst1 = parseMessage(encryptedString);
     console.log(lst1.join(" "));
-    $(document).keydown(function(e) {
-        var elid = $(document.activeElement).hasClass('textInput');
-        if (e.keyCode === 8 && !elid) {
-            return false;
-        };
-    });
+    // $(document).keydown(function(e) {
+    //     var elid = $(document.activeElement).hasClass('textInput');
+    //     if (e.keyCode === 8 && !elid) {
+    //         return false;
+    //     };
+    // });
 }
 
 function mod(x, y) {
@@ -165,7 +167,6 @@ function rotateLetterPositions(rotors) {
         globalRotors[rotors[3]].position =
             rotateLetter(globalRotors[rotors[3]].position);
     }
-    updateRotors();
 }
 
 function forwardPass(rotorName, oldLetter, letterPosition) {
@@ -224,16 +225,26 @@ function angle(letter) {
 }
 
 function updateRotors() {
-    rotate("#I",
-        letterInAlphabet(angle(globalRotors[userRotors[0]].position)));
-    rotate("#II",
-        letterInAlphabet(angle(globalRotors[userRotors[1]].position)));
-    rotate("#III",
-        letterInAlphabet(angle(globalRotors[userRotors[2]].position)));
-    rotate("#VI",
-        letterInAlphabet(angle(globalRotors[userRotors[3]].position)));
-    rotate("#V",
-        letterInAlphabet(angle(globalRotors[userRotors[4]].position)));
+    rotate("#II", angle(globalRotors[userRotors[1]].position));
+    rotate("#III", angle(globalRotors[userRotors[2]].position));
+    rotate("#VI", angle(globalRotors[userRotors[3]].position));
+    rotate("#V", angle(globalRotors[userRotors[4]].position));
+}
+
+function resetRotors() {
+    rotate("#II", 0);
+    rotate("#III", 0);
+    rotate("#VI", 0);
+    rotate("#V", 0);
+
+}
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
 }
 
 window.onload = main;
